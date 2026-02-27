@@ -11,9 +11,8 @@ import { computeSummary, matchesSearch } from "@/components/spares/utils";
 import { TicketsPublicTable } from "@/components/spares/TicketsPublicTable";
 
 /**
- * Public service dashboard.
- * - Mobile: cards
- * - Desktop: table
+ * Public service dashboard (mobile-friendly).
+ * Reuses the ticket-style components from /components/spares since columns are identical.
  */
 export function ServicePublicClient({ machineId }: { machineId: string }) {
   const [loading, setLoading] = useState(true);
@@ -46,8 +45,7 @@ export function ServicePublicClient({ machineId }: { machineId: string }) {
 
   const filtered = useMemo(() => {
     return rows.filter((r) => {
-      const okStatus =
-        status === "All" ? true : String(r.Status || "").trim() === status;
+      const okStatus = status === "All" ? true : String(r.Status || "").trim() === status;
       const okSearch = matchesSearch(r, search);
       return okStatus && okSearch;
     });
@@ -57,9 +55,9 @@ export function ServicePublicClient({ machineId }: { machineId: string }) {
 
   const stats = useMemo(
     () => [
-      { label: "Closed", value: summary.totalInstalledQty },
+      { label: "Installed/Closed", value: summary.totalInstalledQty },
       { label: "Last Date", value: summary.lastInstallationDate },
-      { label: "Open", value: summary.pendingQty },
+      { label: "Pending", value: summary.pendingQty },
     ],
     [summary]
   );
@@ -68,22 +66,7 @@ export function ServicePublicClient({ machineId }: { machineId: string }) {
 
   return (
     <>
-      {/* ✅ Summary cards */}
-      <div className="mb-4">
-        <StatCards stats={stats} />
-      </div>
 
-      {/* ✅ Filters */}
-      <Card className="p-4 mb-4">
-        <SparesFilters
-          search={search}
-          onSearchChange={setSearch}
-          status={status}
-          onStatusChange={setStatus}
-        />
-      </Card>
-
-      {/* ✅ Results */}
       {filtered.length === 0 ? (
         <Card className="p-6 text-center">
           <div className="text-black/80 font-medium">No records found</div>
@@ -92,17 +75,8 @@ export function ServicePublicClient({ machineId }: { machineId: string }) {
           </div>
         </Card>
       ) : (
-        <>
-          {/* Mobile cards */}
-          <div className="block lg:hidden">
-            <SparesMobileList rows={filtered} />
-          </div>
-
-          {/* Desktop table */}
-          <div className="hidden lg:block">
-            <TicketsPublicTable rows={filtered} />
-          </div>
-        </>
+        <SparesMobileList rows={filtered} />
+        
       )}
     </>
   );
