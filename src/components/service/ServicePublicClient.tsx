@@ -65,18 +65,6 @@ export function ServicePublicClient({ machineId }: { machineId: string }) {
 
   return (
     <>
-      <div className="mb-4">
-        <StatCards stats={stats} />
-      </div>
-
-      <Card className="p-4 mb-4">
-        <SparesFilters
-          search={search}
-          onSearchChange={setSearch}
-          status={status}
-          onStatusChange={setStatus}
-        />
-      </Card>
 
       {filtered.length === 0 ? (
         <Card className="p-6 text-center">
