@@ -8,7 +8,6 @@ import { SparesFilters } from "@/components/spares/SparesFilters";
 import { SparesMobileList } from "@/components/spares/SparesMobileList";
 import { StatCards } from "@/components/spares/StatCards";
 import { computeSummary, matchesSearch } from "@/components/spares/utils";
-import { TicketsPublicTable } from "@/components/spares/TicketsPublicTable";
 
 /**
  * Public service dashboard (mobile-friendly).
@@ -53,19 +52,20 @@ export function ServicePublicClient({ machineId }: { machineId: string }) {
 
   const summary = useMemo(() => computeSummary(filtered), [filtered]);
 
-  const stats = useMemo(
-    () => [
-      { label: "Installed/Closed", value: summary.totalInstalledQty },
-      { label: "Last Date", value: summary.lastInstallationDate },
-      { label: "Pending", value: summary.pendingQty },
-    ],
-    [summary]
-  );
 
   if (loading) return <LoadingSpinner />;
 
   return (
     <>
+
+      <Card className="p-4 mb-4">
+        <SparesFilters
+          search={search}
+          onSearchChange={setSearch}
+          status={status}
+          onStatusChange={setStatus}
+        />
+      </Card>
 
       {filtered.length === 0 ? (
         <Card className="p-6 text-center">
@@ -76,7 +76,6 @@ export function ServicePublicClient({ machineId }: { machineId: string }) {
         </Card>
       ) : (
         <SparesMobileList rows={filtered} />
-        
       )}
     </>
   );
