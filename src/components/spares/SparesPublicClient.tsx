@@ -13,7 +13,7 @@ export function SparesPublicClient({ machineId }: { machineId: string }) {
   const [loading, setLoading] = useState(true);
   const [rows, setRows] = useState<SpareRow[]>([]);
   const [search, setSearch] = useState("");
-  const [status, setStatus] = useState<"All" | "Installed" | "Pending">("All");
+  const [status, setStatus] = useState<"All" | "Open" | "Close">("All");
 
   useEffect(() => {
     let alive = true;

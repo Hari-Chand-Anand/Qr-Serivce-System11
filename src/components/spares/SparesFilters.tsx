@@ -33,8 +33,8 @@ export function SparesFilters(props: {
           className="w-full rounded-2xl border border-black/10 bg-white/80 px-3 py-2 text-sm text-[#1d1d1f] shadow-sm focus:outline-none focus:ring-4 focus:ring-black/10"
         >
           <option value="All">All</option>
-          <option value="Installed">Open</option>
-          <option value="Pending">Close</option>
+          <option value="Open">Open</option>
+          <option value="Close">Close</option>
         </select>
       </div>
 

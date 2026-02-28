@@ -8,7 +8,7 @@ import { SparesAdminTable } from "./SparesAdminTable";
 
 export function SparesAdminClient({ rows }: { rows: SpareRow[] }) {
   const [search, setSearch] = useState("");
-  const [status, setStatus] = useState<"All" | "Installed" | "Pending">("All");
+  const [status, setStatus] = useState<"All" | "Open" | "Close">("All");
   const [dateFrom, setDateFrom] = useState("");
   const [dateTo, setDateTo] = useState("");
 
